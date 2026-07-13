@@ -1,5 +1,3 @@
----
-
 ## 🎨 Frontend
 
 > [!NOTE]
@@ -8,8 +6,6 @@
 >
 > Автор оригинального frontend — [makedonsky-it](https://github.com/makedonsky-it).
 > В этом проекте мной разработан backend и выполнена его интеграция с frontend.
-
----
 
 
 # Первый запуск:
