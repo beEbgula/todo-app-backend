@@ -1,49 +1,49 @@
-## 🎨 Frontend
+# Todo App
 
-> [!NOTE]
-> Frontend-часть проекта основана на репозитории
-> [makedonsky-it/todo-app-frontend](https://github.com/makedonsky-it/todo-app-frontend).
->
-> Автор оригинального frontend — [makedonsky-it](https://github.com/makedonsky-it).
-> В этом проекте мной разработан backend и выполнена его интеграция с frontend.
+Учебное todo-приложение: backend на FastAPI, PostgreSQL и React frontend.
+Backend и база данных запускаются через Docker Compose.
 
 
-# Первый запуск:
-```bash
-python3 -m venv venv
-venv/scripts/activate
-pip install -r requirements.txt
-docker run -e POSTGRES_PASSWORD=<> -p 5432:5432 -d postgres
-uvicorn app.main:app --reload --port 8080
+## Запуск backend
+
+Требуется установленный и запущенный Docker Desktop.
+
+```powershell
+Copy-Item .env.example .env
+docker compose up --build
+```
+
+Перед запуском замените `your_password` в `.env` на локальный пароль.
+
+- API: <http://localhost:8080>
+- Swagger UI: <http://localhost:8080/docs>
+
+
+Остановить контейнеры:
+
+```powershell
+docker compose down
+```
+
+Удалить контейнеры вместе с данными PostgreSQL:
+
+```powershell
+docker compose down -v
 ```
 
 
-### 1) Сохранение информации в контейнер
+## Запуск frontend
 
-```bash
-# Создание и запуск без сохранения данных
-docker run -d --name 'container_name' -e POSTGRES_PASSWORD=<> -p 5432:5432 postgres
+Frontend подключён как Git submodule и запускается отдельно:
 
-# Запуск c сохранением данных
-docker run 'container_name'
-
-# Посмотреть список всех контейнеров | список активных:
-docker ps -a | docker ps
+```powershell
+git submodule update --init --recursive
+cd todo-app-frontend
+npm install
+npm start
 ```
 
-При подключении к проекту контейнера мы сохраняем данные в бд, но при его перезагрузке / удалении информация всё равно стирается. 
-(Все хранится только в активной сессии)
+Приложение откроется на <http://localhost:3000>.
 
-
-### 2) Сохранение информации в volume
-
-```bash
-# Создание
-docker run -d --name 'container_name' -e POSTGRES_PASSWORD=admin -p 5432:5432 -v 'volume_name':/var/lib/postgresql postgres:latest
-
-# Посмотреть список контейнеров
-docker ps
-```
-
-Так данные сохраняются в отдельном хранилище (Volume) на вашем компьютере.
-Volume существует независимо от контейнера (его можно удалить, а затем создать новый и подключить к нему тот же Volume) — все данные будут на месте.
+Frontend основан на репозитории
+[makedonsky-it/todo-app-frontend](https://github.com/makedonsky-it/todo-app-frontend).
