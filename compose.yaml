@@ -15,6 +15,17 @@ services:
       timeout: 3s
       retries: 10
 
+  redis:
+    image: redis:8-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+
   api:
     build:
       context: .
@@ -23,6 +34,7 @@ services:
       - .env
     environment:
       DATABASE_URL: "postgresql+psycopg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-todo}"
+      REDIS_URL: "redis://redis:6379/0"
     ports:
       - "127.0.0.1:${API_PORT:-8080}:8080"
     depends_on:

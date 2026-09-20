@@ -3,6 +3,7 @@
 Учебное todo-приложение: backend на FastAPI, PostgreSQL и React frontend.
 Backend и база данных запускаются через Docker Compose.
 
+Добавлено кеширование списка задач с помощью Redis.
 
 ## Запуск backend
 

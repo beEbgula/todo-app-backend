@@ -7,7 +7,11 @@ from dataclasses import dataclass, field
 
 class Settings(BaseSettings):
     DATABASE_URL: str
+    REDIS_URL: str
     CORS_ALLOWED_ORIGINS: list[str] = ["http://localhost:3000"]
+    CACHE_TTL_SECONDS: int
+    CACHE_TASKS_KEY: str = "cache:tasks_list"
+    CACHE_CATEGORIES_KEY: str = "cache:category_list"
 
     model_config = SettingsConfigDict(
         env_file = ".env",
